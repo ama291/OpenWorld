@@ -24,9 +24,11 @@
 		var loginname;
 		var player;
 		var playerarray = [];
+        var socket;
 		window.addEventListener("load", windowLoadHandler, false);
 		function windowLoadHandler() {
 			loginname = prompt("Please enter a name.");
+            socket = io.connect();
 			canvasApp();
 		}
 		function canvasApp() {
@@ -42,7 +44,6 @@
 			var playerimg = document.getElementById("playerimg");
 			var submit = document.getElementById("submit");
 			var chatbox = document.getElementById("chat");
-			var socket = io.connect();
 			socket.on('clientarray', function (data) {
 				playerarray = data;
 				redraw();
