@@ -28,6 +28,9 @@
 		window.addEventListener("load", windowLoadHandler, false);
 		function windowLoadHandler() {
 			loginname = prompt("Please enter a name.");
+			if (loginname == null || loginname == "") {
+				loginname = "Player";
+			}
             socket = io.connect();
 			canvasApp();
 		}
