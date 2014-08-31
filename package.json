@@ -4,7 +4,7 @@
     "description": "OpenWorld by Alexander Aron.",
     "dependencies": {
         "socket.io": "latest",
-	"logfmt": "^1.1.2",
+	"logfmt": "latest",
         "express": "latest",
         "jade": "latest"
     },
