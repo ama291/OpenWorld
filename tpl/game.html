@@ -49,8 +49,6 @@
 			var chatbox = document.getElementById("chat");
 			socket.on('clientarray', function (data) {
 				playerarray = data;
-				redraw();
-
 			});
 			socket.on('playerdata', function (data) {
 				player.index = data.index;
@@ -64,7 +62,6 @@
 						player.index = i;
 					}
 				}
-				redraw();
 			});
 			function cafeworld() {
 				this.name = "cafe";
@@ -156,8 +153,7 @@
 			player = new playertemp(200,200,loginname);
 			socket.emit('newplayer', player);
 			scene = new cafeworld();
-			redraw();
-			redraw();
+			startAnimation(); //starts the game
 			function redraw() {
 				scene.draw();
 				for (var i=0; i<playerarray.length; i++) {
@@ -174,7 +170,6 @@
 		            		player.x -= 20;
 		            	}
 		            	socket.emit('arrayserver', player);
-		            	redraw();
 			        }
 			        if (key == 37) { //left
 			            player.x -= 20;
@@ -183,7 +178,6 @@
 			            	player.x += 20;
 			            }
 			            socket.emit('arrayserver', player);
-			            redraw();
 			        }
 			        if (key == 38) { //up
 			            player.y -= 20;
@@ -192,7 +186,6 @@
 			            	player.y += 20;
 			            }
 			            socket.emit('arrayserver', player);
-			            redraw();
 			        }
 			        if (key == 40) { //down
 			            player.y += 20;
@@ -201,7 +194,6 @@
 			            	player.y -= 20;
 			            }
 			            socket.emit('arrayserver', player);
-			            redraw();
 			        }
 			        if (key == 13) {
             			submit.onclick();
@@ -213,8 +205,20 @@
 		    	chatbox.value = "";
 		    	player.messagetime = new Date().getTime();
 		    	socket.emit('arrayserver', player);
-		    	redraw();
 		    }
+
+		    function startAnimation() {
+				running = true;
+				(function animloop(){
+				  request = requestAnimationFrame(animloop);
+				  redraw();
+				})();
+			}
+			
+			function stopAnimation() {
+				running = false;
+				cancelAnimationFrame(request);
+			}
 		}
 	</script>
 </html>
