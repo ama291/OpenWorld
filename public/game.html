@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<title>OpenWorld v2.0 - Hang Out Online</title>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+		<center>
+			<canvas id="displayCanvas" width="800px" height="500px" style="border: 1px solid;">
+				Your browser does not support the HTML5 canvas.
+			</canvas>
+			<br />
+			<input type="text" size="100" id="chat" />
+			<input type="button" id="submit" value="Submit" />
+			<br />
+			<p>Shoutcast Radio From: 181.FM - POWER 181</p>
+			<!-- shoutcast radio -->
+			<audio controls autoplay="autoplay" src="http://108.61.73.117:14128/;"></audio>
+		</center>
+	</body>
+	<script type="text/javascript">
+		window.addEventListener("load", windowLoadHandler, false);
+		function windowLoadHandler() {
+            socket = io.connect();
+			canvasApp();
+		}
+		function canvasApp() {
+			//code below sets up variables so that the canvas context can be referenced in JavaScript.
+			var displayCanvas = document.getElementById("displayCanvas");
+			var context = displayCanvas.getContext("2d");
+			var displayWidth = displayCanvas.width;
+			var displayHeight = displayCanvas.height;
+
+			function draw() {
+				
+			}
+			
+		    function startAnimation() {
+				running = true;
+				(function animloop(){
+				  request = requestAnimationFrame(animloop);
+				  draw();
+				})();
+			}
+			
+			function stopAnimation() {
+				running = false;
+				cancelAnimationFrame(request);
+			}
+		}
+	</script>
+</html>

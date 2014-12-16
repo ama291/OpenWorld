@@ -1,0 +1,10 @@
+{
+    "name": "OpenWorld",
+    "version": "0.0.0",
+    "description": "OpenWorld by Alexander Aron.",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest"
+    },
+    "author": "developer"
+}
