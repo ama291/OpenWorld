@@ -17,14 +17,16 @@
 			<input type="button" id="submit" value="Submit" />
 			<br />
 			<p>Shoutcast Radio From: <a href="http://108.61.73.117:14128/">181.FM - POWER 181</a></p>
-			<!-- shoutcast radio -->
+			<!-- shoutcast radio needs semicolon at the end of url-->
 			<audio controls autoplay="autoplay" src="http://108.61.73.117:14128/;"></audio>
 		</center>
 	</body>
 	<script type="text/javascript">
 		window.addEventListener("load", windowLoadHandler, false);
 		function windowLoadHandler() {
+			//connect to node server
             socket = io.connect();
+			//start the canvas app
 			canvasApp();
 		}
 		function canvasApp() {
@@ -33,23 +35,67 @@
 			var context = displayCanvas.getContext("2d");
 			var displayWidth = displayCanvas.width;
 			var displayHeight = displayCanvas.height;
-
-			function draw() {
-				
+			
+			//create player
+			var player = new playerTemp(100,100);
+			
+			//function executed every frame
+			function onTimer() {
+				//clear the background
+				context.fillStyle = "#FFFFFF";
+				context.fillRect(0,0,displayWidth,displayHeight);
+				//draw the player
+				player.draw();
 			}
 			
-		    function startAnimation() {
+			//start animation when called
+			function startAnimation() {
 				running = true;
 				(function animloop(){
-				  request = requestAnimationFrame(animloop);
-				  draw();
+					request = requestAnimationFrame(animloop);
+					onTimer();
 				})();
 			}
 			
+			//stop animation when called
 			function stopAnimation() {
 				running = false;
 				cancelAnimationFrame(request);
 			}
+			
+			//player template
+			function playerTemp(xpos,ypos) {
+				this.x = xpos;
+				this.y = ypos;
+				this.draw = function() {
+					//drawing rectangles temporarily
+					context.fillStyle = "#000000";
+					context.fillRect(this.x,this.y,50,50);
+				}
+			}
+			
+			//handle keypresses
+			window.onkeydown = function(e) {
+				var key = e.keyCode ? e.keyCode : e.which;
+				if (key == 39) { //right
+	            	player.x += 10;
+		        }
+		        if (key == 37) { //left
+		            player.x -= 10;
+				}
+		        if (key == 38) { //up
+		            player.y -= 10;
+				}
+		        if (key == 40) { //down
+		            player.y += 10;
+		        }
+		        if (key == 13) {
+        			submit.onclick();
+   				}
+		    }
+			
+			//start the game
+			startAnimation();
 		}
 	</script>
 </html>
